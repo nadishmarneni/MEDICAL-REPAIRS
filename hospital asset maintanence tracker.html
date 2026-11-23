@@ -1,0 +1,139 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>MediTrack – Equipment Maintenance</title>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Public+Sans:wght@400;500;600;700&display=swap">
+<style>
+:root{--bg:#eef3f3;--card:#fff;--tx:#10292b;--mut:#5c7476;--bd:#d3dede;--ac:#0b7a82;--acs:#dff1f2;--ok:#1b7a43;--oks:#dff3e6;--wn:#9a5b00;--wns:#fcefd2;--bd2:#b42318;--bds:#fde4e1;--hd:#0f3d3f;
+box-sizing:border-box;padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px);color-scheme:light}
+@media (prefers-color-scheme:dark){:root:not([data-theme="light"]){--bg:#0c1819;--card:#13262a;--tx:#e3eeee;--mut:#8fa9ab;--bd:#254044;--ac:#4fc3cb;--acs:#17393d;--ok:#6fd49a;--oks:#14342a;--wn:#f0b254;--wns:#3a2c10;--bd2:#ff8b7e;--bds:#3d1d1a;--hd:#091213;color-scheme:dark}}
+:root[data-theme="dark"]{--bg:#0c1819;--card:#13262a;--tx:#e3eeee;--mut:#8fa9ab;--bd:#254044;--ac:#4fc3cb;--acs:#17393d;--ok:#6fd49a;--oks:#14342a;--wn:#f0b254;--wns:#3a2c10;--bd2:#ff8b7e;--bds:#3d1d1a;--hd:#091213;color-scheme:dark}
+html{scroll-padding-top:env(safe-area-inset-top,0px);height:100%}
+*{box-sizing:border-box}
+body{margin:0;background:var(--bg);color:var(--tx);font:15px/1.5 "Public Sans",system-ui,-apple-system,"Segoe UI",sans-serif;min-height:100%}
+body::before{content:"";position:fixed;inset:0 0 auto;height:env(safe-area-inset-top,0px);background:var(--hd);z-index:10}
+header{background:var(--hd);color:#fff;position:sticky;top:env(safe-area-inset-top,0px);z-index:9;padding:10px 16px;display:flex;flex-wrap:wrap;gap:6px 18px;align-items:center}
+header h1{font-size:18px;margin:0;font-weight:700;letter-spacing:-.01em}
+nav{display:flex;gap:2px;flex-wrap:wrap;flex:1}
+nav button{background:none;border:0;color:#b8d3d4;font:inherit;font-weight:500;padding:7px 12px;border-radius:6px;cursor:pointer}
+nav button.on{background:#ffffff1f;color:#fff}
+nav button:focus-visible,button:focus-visible,select:focus-visible,input:focus-visible,textarea:focus-visible{outline:2px solid var(--ac);outline-offset:1px}
+main{max-width:1180px;margin:0 auto;padding:18px 16px 40px}
+h2{font-size:20px;margin:0 0 12px;letter-spacing:-.01em}
+h3{font-size:15px;margin:0 0 8px}
+.bar{display:flex;gap:8px;flex-wrap:wrap;align-items:center;margin-bottom:12px}
+.bar h2{margin:0;margin-right:auto}
+.kpis{display:grid;grid-template-columns:repeat(auto-fit,minmax(150px,1fr));gap:10px;margin-bottom:14px}
+.k{background:var(--card);border:1px solid var(--bd);border-radius:8px;padding:12px 14px}
+.k b{display:block;font-size:28px;line-height:1.1;font-weight:700}
+.k span{color:var(--mut);font-size:13px}
+.k.bad b{color:var(--bd2)}.k.warn b{color:var(--wn)}.k.good b{color:var(--ok)}
+.grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(320px,1fr));gap:14px}
+.card{background:var(--card);border:1px solid var(--bd);border-radius:8px;padding:14px}
+.tw{overflow-x:auto;background:var(--card);border:1px solid var(--bd);border-radius:8px}
+table{border-collapse:collapse;width:100%;min-width:640px}
+th,td{text-align:left;padding:8px 12px;border-bottom:1px solid var(--bd);vertical-align:middle;font-size:14px}
+th{font-weight:600;color:var(--mut);font-size:13px;background:var(--bg)}
+tr:last-child td{border-bottom:0}
+.chip{display:inline-block;padding:1px 9px;border-radius:99px;font-size:12.5px;font-weight:600;white-space:nowrap}
+.ok{background:var(--oks);color:var(--ok)}.wn{background:var(--wns);color:var(--wn)}.bd{background:var(--bds);color:var(--bd2)}.nt{background:var(--acs);color:var(--ac)}
+button.b,select,input,textarea{font:inherit;color:var(--tx);background:var(--card);border:1px solid var(--bd);border-radius:6px;padding:6px 10px}
+button.b{cursor:pointer;font-weight:600}
+button.p{background:var(--ac);border-color:var(--ac);color:#fff}
+:root[data-theme="dark"] button.p{color:#06191b}
+@media (prefers-color-scheme:dark){:root:not([data-theme="light"]) button.p{color:#06191b}}
+td select{padding:3px 6px;font-size:13px;max-width:150px}
+.rem{list-style:none;margin:0;padding:0}
+.rem li{display:flex;gap:10px;align-items:center;padding:8px 0;border-bottom:1px solid var(--bd)}
+.rem li:last-child{border:0}.rem div{flex:1;min-width:0}.rem small{color:var(--mut);display:block}
+.seg{display:flex;height:14px;border-radius:7px;overflow:hidden;background:var(--bd);margin:6px 0 10px}
+.seg i{display:block}
+.lg{display:flex;gap:14px;flex-wrap:wrap;font-size:13px;color:var(--mut)}.lg b{color:var(--tx)}
+.hb{height:8px;border-radius:4px;background:var(--ac);min-width:2px}
+.mut{color:var(--mut)}.empty{padding:22px;text-align:center;color:var(--mut)}
+dialog{border:1px solid var(--bd);border-radius:10px;background:var(--card);color:var(--tx);padding:18px;width:min(460px,94vw)}
+dialog::backdrop{background:#0008}
+label{display:block;font-size:13px;font-weight:600;margin:10px 0 3px}
+dialog input,dialog select,dialog textarea{width:100%}
+.act{display:flex;gap:8px;justify-content:flex-end;margin-top:16px}
+#toast{position:fixed;left:50%;bottom:calc(18px + env(safe-area-inset-bottom,0px));transform:translateX(-50%);background:var(--hd);color:#fff;padding:8px 16px;border-radius:8px;opacity:0;pointer-events:none;transition:opacity .2s;z-index:20}
+#toast.on{opacity:1}
+</style>
+</head>
+<body>
+<header><h1>MediTrack</h1><nav id="nav"></nav><button class="b" id="rst" title="Restore sample data">Reset demo</button></header>
+<main id="m"></main>
+<dialog id="dlg"></dialog>
+<div id="toast" role="status"></div>
+<script>
+const $=s=>document.querySelector(s),K="meditrack1",DAY=864e5;
+const today=()=>new Date().toISOString().slice(0,10),add=(d,n)=>new Date(Date.parse(d)+n*DAY).toISOString().slice(0,10);
+const diff=(a,b)=>Math.round((Date.parse(a)-Date.parse(b))/DAY),esc=s=>String(s??"").replace(/[&<>"]/g,c=>({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;"}[c]));
+const ST=["Operational","Under Maintenance","Out of Service"],PR=["Low","Medium","High","Critical"],TS=["Open","Assigned","In Progress","Resolved"],CAT=["Imaging","Life support","Monitoring","Laboratory","Surgical","Infusion"];
+function seed(){const t=today(),a=(id,name,cat,loc,sn,st,yr)=>({id,name,cat,loc,sn,st,yr});
+return{n:30,tab:"dash",
+assets:[a(1,"MRI Scanner 3T","Imaging","Radiology","SN-MR-4471","Operational",2021),a(2,"Ventilator V60","Life support","ICU Bay 2","SN-VT-1180","Under Maintenance",2019),a(3,"Patient Monitor PM-9","Monitoring","Ward A","SN-PM-3302","Operational",2022),a(4,"Defibrillator D500","Life support","Emergency","SN-DF-0925","Operational",2020),a(5,"Infusion Pump IP-40","Infusion","Ward B","SN-IP-7719","Out of Service",2018),a(6,"Blood Analyzer BA-2","Laboratory","Pathology Lab","SN-BA-5560","Operational",2023),a(7,"X-ray Unit DR-1","Imaging","Radiology","SN-XR-2204","Operational",2017),a(8,"Surgical Light SL-8","Surgical","Theatre 1","SN-SL-6613","Operational",2020)],
+techs:[{id:1,name:"Priya Nair",skill:"Imaging & radiology"},{id:2,name:"Marcus Webb",skill:"Life support"},{id:3,name:"Ananya Rao",skill:"Lab & monitoring"},{id:4,name:"Tom Eriksen",skill:"General biomedical"}],
+sch:[{id:1,aid:1,task:"Quarterly magnet & coil check",every:90,last:add(t,-80)},{id:2,aid:2,task:"Calibration & filter replacement",every:180,last:add(t,-175)},{id:3,aid:4,task:"Battery & shock test",every:30,last:add(t,-41)},{id:4,aid:6,task:"Reagent line flush & calibration",every:60,last:add(t,-20)},{id:5,aid:3,task:"Safety inspection",every:365,last:add(t,-350)},{id:6,aid:7,task:"Radiation output verification",every:180,last:add(t,-100)}],
+tk:[{id:1,aid:2,issue:"Pressure alarm false triggers",pr:"High",s:"In Progress",tid:2,op:add(t,-2),cl:"",dt:0,cost:0,note:""},{id:2,aid:5,issue:"Pump motor not running, occlusion error",pr:"Critical",s:"Open",tid:0,op:add(t,-1),cl:"",dt:0,cost:0,note:""},{id:3,aid:3,issue:"Display flicker",pr:"Medium",s:"Assigned",tid:3,op:add(t,-4),cl:"",dt:0,cost:0,note:""},
+{id:4,aid:1,issue:"Coil connector fault",pr:"High",s:"Resolved",tid:1,op:add(t,-40),cl:add(t,-38),dt:36,cost:1850,note:"Replaced coil connector; scan quality verified."},{id:5,aid:4,issue:"Battery failed self-test",pr:"Critical",s:"Resolved",tid:2,op:add(t,-25),cl:add(t,-24),dt:9,cost:420,note:"New battery pack fitted."},{id:6,aid:6,issue:"Calibration drift",pr:"Medium",s:"Resolved",tid:3,op:add(t,-15),cl:add(t,-14),dt:6,cost:150,note:"Recalibrated; QC passed."},{id:7,aid:7,issue:"Collimator misalignment",pr:"Medium",s:"Resolved",tid:1,op:add(t,-60),cl:add(t,-57),dt:20,cost:640,note:"Realigned and tested."}]}}
+let S;try{S=JSON.parse(localStorage.getItem(K))}catch(e){}if(!S||!S.assets)S=seed();
+const save=()=>{try{localStorage.setItem(K,JSON.stringify(S))}catch(e){}};
+const A=id=>S.assets.find(x=>x.id==id)||{name:"(removed)",cat:"",loc:""},T=id=>(S.techs.find(x=>x.id==id)||{name:"Unassigned"}).name;
+const opts=(l,s)=>l.map(x=>`<option${x==s?" selected":""}>${esc(x)}</option>`).join("");
+const aopts=s=>S.assets.map(a=>`<option value="${a.id}"${a.id==s?" selected":""}>${esc(a.name)} – ${esc(a.loc)}</option>`).join("");
+const topts=s=>`<option value="0">Unassigned</option>`+S.techs.map(t=>`<option value="${t.id}"${t.id==s?" selected":""}>${esc(t.name)}</option>`).join("");
+const chip=(t,c)=>`<span class="chip ${c}">${esc(t)}</span>`,stc=s=>s=="Operational"||s=="Resolved"?"ok":s=="Out of Service"||s=="Critical"?"bd":s=="High"||s=="Under Maintenance"?"wn":"nt";
+const nextDue=s=>add(s.last,+s.every),dueIn=s=>diff(nextDue(s),today());
+const sState=s=>{const d=dueIn(s);return d<0?chip(`Overdue ${-d}d`,"bd"):d<=14?chip(`Due in ${d}d`,"wn"):chip("On track","ok")};
+const toast=m=>{const t=$("#toast");t.textContent=m;t.className="on";clearTimeout(toast.h);toast.h=setTimeout(()=>t.className="",2200)};
+function form(title,fields,cb,ok="Save"){const d=$("#dlg");d.innerHTML=`<form><h3>${title}</h3>${fields.map(f=>`<label for="f_${f.k}">${f.l}</label>${f.t=="select"?`<select id="f_${f.k}" name="${f.k}">${f.o}</select>`:f.t=="area"?`<textarea id="f_${f.k}" name="${f.k}" rows="3">${f.v||""}</textarea>`:`<input id="f_${f.k}" name="${f.k}" type="${f.t||"text"}" value="${esc(f.v||"")}" ${f.r===false?"":"required"} ${f.t=="number"?'min="0" step="any"':""}>`}`).join("")}<div class="act"><button type="button" class="b" id="cx">Cancel</button><button class="b p">${ok}</button></div></form>`;
+d.querySelector("form").onsubmit=e=>{e.preventDefault();cb(Object.fromEntries(new FormData(e.target)));d.close()};$("#cx").onclick=()=>d.close();d.showModal()}
+function sync(aid){const open=S.tk.some(t=>t.aid==aid&&t.s!="Resolved"),a=A(aid);if(a.id){if(open&&a.st=="Operational")a.st="Under Maintenance";if(!open&&a.st=="Under Maintenance")a.st="Operational"}}
+const TABS=[["dash","Dashboard"],["assets","Assets"],["sched","Service schedules"],["tix","Tickets"],["techs","Technicians"],["rep","Reports"]];
+let q="",fs="All";
+function reminders(){return S.sch.filter(s=>dueIn(s)<=14).sort((a,b)=>dueIn(a)-dueIn(b))}
+function dash(){const as=S.assets,op=as.filter(a=>a.st=="Operational").length,ot=S.tk.filter(t=>t.s!="Resolved"),od=S.sch.filter(s=>dueIn(s)<0).length,cut=add(today(),-30),dt=S.tk.filter(t=>t.cl&&t.cl>=cut).reduce((n,t)=>n+t.dt,0),rm=reminders();
+const cnt=ST.map(s=>as.filter(a=>a.st==s).length),col=["var(--ok)","var(--wn)","var(--bd2)"];
+return`<div class="bar"><h2>Status dashboard</h2></div><div class="kpis"><div class="k good"><b>${as.length?Math.round(op/as.length*100):0}%</b><span>Fleet operational (${op} of ${as.length})</span></div><div class="k ${ot.length?"warn":""}"><b>${ot.length}</b><span>Open tickets</span></div><div class="k ${od?"bad":""}"><b>${od}</b><span>Overdue services</span></div><div class="k"><b>${dt}h</b><span>Downtime, last 30 days</span></div></div>
+<div class="grid"><div class="card"><h3>Reminders (due within 14 days)</h3>${rm.length?`<ul class="rem">${rm.map(s=>`<li><div><b>${esc(A(s.aid).name)}</b><small>${esc(s.task)} · due ${nextDue(s)}</small></div>${sState(s)}<button class="b" data-a="done" data-i="${s.id}">Mark done</button></li>`).join("")}</ul>`:`<div class="empty">Nothing due. All services are on track.</div>`}</div>
+<div class="card"><h3>Equipment status</h3><div class="seg">${cnt.map((c,i)=>`<i style="width:${as.length?c/as.length*100:0}%;background:${col[i]}"></i>`).join("")}</div><div class="lg">${ST.map((s,i)=>`<span><b>${cnt[i]}</b> ${s}</span>`).join("")}</div>
+<h3 style="margin-top:16px">Open tickets</h3>${ot.length?`<ul class="rem">${ot.sort((a,b)=>PR.indexOf(b.pr)-PR.indexOf(a.pr)).map(t=>`<li><div><b>${esc(A(t.aid).name)}</b><small>${esc(t.issue)} · ${esc(T(t.tid))}</small></div>${chip(t.pr,stc(t.pr))}</li>`).join("")}</ul>`:`<div class="empty">No open tickets.</div>`}</div></div>`}
+function assets(){const l=S.assets.filter(a=>(fs=="All"||a.st==fs)&&(a.name+a.loc+a.sn+a.cat).toLowerCase().includes(q.toLowerCase()));
+return`<div class="bar"><h2>Asset registry</h2><input id="q" placeholder="Search assets" value="${esc(q)}" aria-label="Search assets"><select id="fs" aria-label="Filter by status">${opts(["All",...ST],fs)}</select><button class="b p" data-a="newA">Add asset</button></div>
+<div class="tw"><table><tr><th>Asset</th><th>Category</th><th>Location</th><th>Serial</th><th>Year</th><th>Status</th><th></th></tr>${l.map(a=>`<tr><td><b>${esc(a.name)}</b></td><td>${esc(a.cat)}</td><td>${esc(a.loc)}</td><td class="mut">${esc(a.sn)}</td><td>${a.yr}</td><td><select data-a="ast" data-i="${a.id}" aria-label="Status">${opts(ST,a.st)}</select></td><td><button class="b" data-a="hist" data-i="${a.id}">Repair history</button></td></tr>`).join("")||`<tr><td colspan=7 class="empty">No assets match. Clear the search or add an asset.</td></tr>`}</table></div>`}
+function sched(){const l=[...S.sch].sort((a,b)=>dueIn(a)-dueIn(b));
+return`<div class="bar"><h2>Service schedules</h2><button class="b p" data-a="newS">Add schedule</button></div><div class="tw"><table><tr><th>Asset</th><th>Task</th><th>Every</th><th>Last done</th><th>Next due</th><th>State</th><th></th></tr>${l.map(s=>`<tr><td><b>${esc(A(s.aid).name)}</b></td><td>${esc(s.task)}</td><td>${s.every} days</td><td>${s.last}</td><td>${nextDue(s)}</td><td>${sState(s)}</td><td><button class="b" data-a="done" data-i="${s.id}">Mark done</button></td></tr>`).join("")||`<tr><td colspan=7 class="empty">No schedules yet. Add one to start tracking services.</td></tr>`}</table></div>`}
+function tix(){const l=[...S.tk].sort((a,b)=>(a.s=="Resolved")-(b.s=="Resolved")||PR.indexOf(b.pr)-PR.indexOf(a.pr));
+return`<div class="bar"><h2>Maintenance tickets</h2><button class="b p" data-a="newT">Raise ticket</button></div><div class="tw"><table><tr><th>#</th><th>Asset</th><th>Issue</th><th>Priority</th><th>Status</th><th>Technician</th><th>Opened</th><th></th></tr>${l.map(t=>`<tr><td>${t.id}</td><td><b>${esc(A(t.aid).name)}</b></td><td>${esc(t.issue)}</td><td>${chip(t.pr,stc(t.pr))}</td><td>${t.s=="Resolved"?chip("Resolved","ok"):`<select data-a="tst" data-i="${t.id}" aria-label="Ticket status">${opts(TS.slice(0,3),t.s)}</select>`}</td><td>${t.s=="Resolved"?esc(T(t.tid)):`<select data-a="tas" data-i="${t.id}" aria-label="Technician">${topts(t.tid)}</select>`}</td><td>${t.op}</td><td>${t.s=="Resolved"?"":`<button class="b" data-a="res" data-i="${t.id}">Resolve</button>`}</td></tr>`).join("")||`<tr><td colspan=8 class="empty">No tickets. Raise one when equipment fails.</td></tr>`}</table></div>`}
+function techs(){return`<div class="bar"><h2>Technicians</h2><button class="b p" data-a="newTech">Add technician</button></div><div class="tw"><table><tr><th>Name</th><th>Specialty</th><th>Active tickets</th><th>Resolved</th></tr>${S.techs.map(t=>{const a=S.tk.filter(k=>k.tid==t.id&&k.s!="Resolved").length;return`<tr><td><b>${esc(t.name)}</b></td><td>${esc(t.skill)}</td><td>${a?chip(a,a>2?"wn":"nt"):"0"}</td><td>${S.tk.filter(k=>k.tid==t.id&&k.s=="Resolved").length}</td></tr>`}).join("")}</table></div>`}
+function rep(){const R=S.tk.filter(t=>t.s=="Resolved"),hrs=R.reduce((n,t)=>n+t.dt,0),cost=R.reduce((n,t)=>n+ +t.cost,0),mttr=R.length?(hrs/R.length).toFixed(1):"–",pm=S.sch.length?Math.round(S.sch.filter(s=>dueIn(s)>=0).length/S.sch.length*100):100;
+const by=S.assets.map(a=>({a,h:R.filter(t=>t.aid==a.id).reduce((n,t)=>n+t.dt,0),c:R.filter(t=>t.aid==a.id).reduce((n,t)=>n+ +t.cost,0),n:R.filter(t=>t.aid==a.id).length})).filter(x=>x.n).sort((a,b)=>b.h-a.h),mx=Math.max(1,...by.map(x=>x.h));
+const cat=CAT.map(c=>({c,cost:R.filter(t=>A(t.aid).cat==c).reduce((n,t)=>n+ +t.cost,0),n:S.assets.filter(a=>a.cat==c).length})).filter(x=>x.n);
+return`<div class="bar"><h2>Reports</h2><button class="b" onclick="print()">Print report</button></div><div class="kpis"><div class="k"><b>${R.length}</b><span>Repairs completed</span></div><div class="k"><b>${mttr}h</b><span>Avg downtime per repair</span></div><div class="k"><b>$${cost.toLocaleString()}</b><span>Total repair cost</span></div><div class="k ${pm<80?"warn":"good"}"><b>${pm}%</b><span>Services on schedule</span></div></div>
+<div class="grid"><div class="card"><h3>Downtime by asset (hours)</h3>${by.length?by.map(x=>`<div style="margin-bottom:10px"><div style="display:flex;justify-content:space-between;font-size:14px"><span>${esc(x.a.name)}</span><b>${x.h}h · ${x.n} repair${x.n>1?"s":""}</b></div><div class="hb" style="width:${x.h/mx*100}%"></div></div>`).join(""):`<div class="empty">No resolved repairs yet.</div>`}</div>
+<div class="card"><h3>Repair cost by category</h3><table style="min-width:0"><tr><th>Category</th><th>Assets</th><th>Cost</th></tr>${cat.map(x=>`<tr><td>${x.c}</td><td>${x.n}</td><td>$${x.cost.toLocaleString()}</td></tr>`).join("")}</table><h3 style="margin-top:16px">Tickets by priority</h3><div class="lg">${PR.map(p=>`<span><b>${S.tk.filter(t=>t.pr==p).length}</b> ${p}</span>`).join("")}</div></div></div>`}
+function render(){document.querySelector("#nav").innerHTML=TABS.map(([k,n])=>`<button data-a="tab" data-i="${k}" class="${S.tab==k?"on":""}">${n}${k=="dash"&&reminders().length?` (${reminders().length})`:""}</button>`).join("");$("#m").innerHTML=({dash,assets,sched,tix,techs,rep})[S.tab]();save()}
+document.addEventListener("click",e=>{const b=e.target.closest("[data-a]");if(!b||b.tagName=="SELECT")return;const a=b.dataset.a,i=+b.dataset.i||b.dataset.i;
+if(a=="tab"){S.tab=i;return render()}
+if(a=="done"){const s=S.sch.find(x=>x.id==i);s.last=today();toast("Service recorded");return render()}
+if(a=="newA")return form("Add asset",[{k:"name",l:"Name"},{k:"cat",l:"Category",t:"select",o:opts(CAT)},{k:"loc",l:"Location"},{k:"sn",l:"Serial number"},{k:"yr",l:"Year purchased",t:"number",v:new Date().getFullYear()}],v=>{S.assets.push({id:S.n++,name:v.name,cat:v.cat,loc:v.loc,sn:v.sn,st:"Operational",yr:+v.yr});toast("Asset added");render()});
+if(a=="newS")return form("Add service schedule",[{k:"aid",l:"Asset",t:"select",o:aopts()},{k:"task",l:"Task"},{k:"every",l:"Repeat every (days)",t:"number",v:90},{k:"last",l:"Last done",t:"date",v:today()}],v=>{S.sch.push({id:S.n++,aid:+v.aid,task:v.task,every:+v.every,last:v.last});toast("Schedule added");render()});
+if(a=="newT")return form("Raise ticket",[{k:"aid",l:"Asset",t:"select",o:aopts()},{k:"issue",l:"What is wrong?"},{k:"pr",l:"Priority",t:"select",o:opts(PR,"Medium")},{k:"tid",l:"Technician",t:"select",o:topts(0)}],v=>{S.tk.push({id:S.tk.reduce((n,t)=>Math.max(n,t.id),0)+1,aid:+v.aid,issue:v.issue,pr:v.pr,s:+v.tid?"Assigned":"Open",tid:+v.tid,op:today(),cl:"",dt:0,cost:0,note:""});sync(+v.aid);toast("Ticket raised");render()});
+if(a=="newTech")return form("Add technician",[{k:"name",l:"Name"},{k:"skill",l:"Specialty"}],v=>{S.techs.push({id:S.n++,name:v.name,skill:v.skill});toast("Technician added");render()});
+if(a=="res"){const t=S.tk.find(x=>x.id==i);return form(`Resolve ticket ${t.id}`,[{k:"dt",l:"Downtime (hours)",t:"number",v:Math.max(1,(diff(today(),t.op)+1)*8)},{k:"cost",l:"Repair cost ($)",t:"number",v:0},{k:"note",l:"Repair notes",t:"area",r:false}],v=>{Object.assign(t,{s:"Resolved",cl:today(),dt:+v.dt,cost:+v.cost,note:v.note});sync(t.aid);toast("Ticket resolved");render()},"Resolve")}
+if(a=="hist"){const as=A(i),h=S.tk.filter(t=>t.aid==i).sort((x,y)=>y.op.localeCompare(x.op)),d=$("#dlg");d.innerHTML=`<h3>${esc(as.name)}: repair history</h3>${h.length?`<ul class="rem">${h.map(t=>`<li><div><b>${esc(t.issue)}</b><small>${t.op}${t.cl?" → "+t.cl:""} · ${esc(T(t.tid))}${t.s=="Resolved"?` · ${t.dt}h down · $${t.cost}`:""}${t.note?"<br>"+esc(t.note):""}</small></div>${chip(t.s,stc(t.s))}</li>`).join("")}</ul>`:`<div class="empty">No repairs recorded for this asset.</div>`}<div class="act"><button class="b p" id="cx">Close</button></div>`;$("#cx").onclick=()=>d.close();d.showModal()}});
+document.addEventListener("change",e=>{const el=e.target,a=el.dataset.a;if(el.id=="fs"){fs=el.value;return render()}
+if(!a)return;const i=+el.dataset.i;
+if(a=="ast")A(i).st=el.value;
+if(a=="tst")S.tk.find(x=>x.id==i).s=el.value;
+if(a=="tas"){const t=S.tk.find(x=>x.id==i);t.tid=+el.value;if(t.tid&&t.s=="Open")t.s="Assigned";if(!t.tid&&t.s=="Assigned")t.s="Open"}
+render()});
+document.addEventListener("input",e=>{if(e.target.id=="q"){q=e.target.value;const p=e.target.selectionStart;render();const n=$("#q");n.focus();n.setSelectionRange(p,p)}});
+$("#rst").onclick=()=>form("Restore sample data",[],()=>{S=seed();render();toast("Sample data restored")},"Restore");
+render();
+</script>
+</body>
+</html>
